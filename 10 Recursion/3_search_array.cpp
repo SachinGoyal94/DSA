@@ -47,7 +47,18 @@ void odds(int arr[],int size,int index)
     }
     odds(arr,size,index+1);
 }
-
+void even(int arr[],int size,int index)
+{
+    if(index==size)
+    {
+        return;
+    }
+    if(!(arr[index]&1))
+    {
+        cout<<arr[index]<<"  ";
+    }
+    even(arr,size,index+1);
+}
 int main()
 {
     int arr[10]={61,53,32,80,40};
@@ -56,6 +67,7 @@ int main()
     int size=5,index=0;
     //cout<<maxelement(arr,5,0,maxi);
     //cout<<minelement(arr,5,0,mini);
-    odds(arr,5,0);
+    //odds(arr,5,0);
+    even(arr,5,0);
 
 }
