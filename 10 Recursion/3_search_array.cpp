@@ -34,25 +34,28 @@ int minelement(int arr[],int size,int index,int &ans)
     int minele=(minelement(arr,size,index+1,ans));
     return minele;
 }
-/*
-int minelement(int arr[],int size,int index,int &ans)
+
+void odds(int arr[],int size,int index)
 {
     if(index==size)
     {
-        return ans;
+        return;
     }
-    ans=min(ans,arr[index]);
-    int minele=(minelement(arr,size,index+1,ans));
-    return minele;
+    if(arr[index]&1)
+    {
+        cout<<arr[index]<<"   ";
+    }
+    odds(arr,size,index+1);
 }
-*/
+
 int main()
 {
-    int arr[10]={60,50,30,80,40};
+    int arr[10]={61,53,32,80,40};
     //cout<<searcher(arr,5,0,30);
     int maxi=INT_MIN,mini=INT_MAX;
     int size=5,index=0;
     //cout<<maxelement(arr,5,0,maxi);
-    cout<<minelement(arr,5,0,mini);
+    //cout<<minelement(arr,5,0,mini);
+    odds(arr,5,0);
 
 }
