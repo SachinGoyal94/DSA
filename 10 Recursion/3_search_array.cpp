@@ -24,7 +24,7 @@ int maxelement(int arr[],int size,int index,int &ans) //if we are storing value 
     int maxele=(maxelement(arr,size,index+1,ans));
     return maxele;
 }
-int minelement(int arr[],int size,int index,int &ans)                                                   //reference so to make change in actual not in copy
+int minelement(int arr[],int size,int index,int &ans)                                               
 {
     if(index==size)
     {
@@ -34,8 +34,8 @@ int minelement(int arr[],int size,int index,int &ans)                           
     int minele=(minelement(arr,size,index+1,ans));
     return minele;
 }
-
-int minelement(int arr[],int size,int index,int &ans)                                                   //reference so to make change in actual not in copy
+/*
+int minelement(int arr[],int size,int index,int &ans)
 {
     if(index==size)
     {
@@ -45,7 +45,7 @@ int minelement(int arr[],int size,int index,int &ans)                           
     int minele=(minelement(arr,size,index+1,ans));
     return minele;
 }
-
+*/
 int main()
 {
     int arr[10]={60,50,30,80,40};
