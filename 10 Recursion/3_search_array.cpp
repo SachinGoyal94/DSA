@@ -62,12 +62,11 @@ void even(int arr[],int size,int index)
 int main()
 {
     int arr[10]={61,53,32,80,40};
-    //cout<<searcher(arr,5,0,30);
     int maxi=INT_MIN,mini=INT_MAX;
     int size=5,index=0;
+    //cout<<searcher(arr,5,0,30);
     //cout<<maxelement(arr,5,0,maxi);
     //cout<<minelement(arr,5,0,mini);
     //odds(arr,5,0);
-    even(arr,5,0);
-
+    //even(arr,5,0);
 }
