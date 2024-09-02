@@ -1,3 +1,4 @@
+//create stack dia to solve
 #include<bits/stdc++.h>
 using namespace std;
 int summer(int n)
