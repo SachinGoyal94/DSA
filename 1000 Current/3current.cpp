@@ -62,10 +62,18 @@ void occur(string &s,string part,int i)
     }
     occur(s,part,i+1);
 }
+int dearranger(int n)
+{
+    if(n==1)
+        return 0;
+    if(n==2)
+        return 1;
+    int ans=(n-1)*(dearranger(n-2)+dearranger(n-1));
+    return ans;
+}
 int main() 
 {
-    string s="daabcbaabcbc",part="abc";
-    occur(s,part,0);
-    cout<<s;
+    int n=3;
+    cout<<dearranger(n)<<endl;
     return 0;
 }
