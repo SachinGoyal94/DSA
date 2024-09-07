@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+/*
 int f(int n) {
     if (n == 1) return 1;
     int x = 1;
@@ -108,6 +108,7 @@ int main()
         cout<<ans<<endl;
     
 }
+*/
 /*
 class Solution {
   public:

@@ -1,3 +1,5 @@
+//In place sorting means you are using fixed amout of memory and in the array itself without taking any extra space
+//Insertion sort is in place sorting 
 #include <iostream>
 #include <vector>
 
