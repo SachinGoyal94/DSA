@@ -96,7 +96,7 @@ int main()
     int n=3;
     cout<<dearranger(n)<<endl;
     return 0;
-    */
+    *//*
     vector<vector<int>>arr(3,vector<int>(3,1));
     arr[0][2]=0;
     arr[2][0]=0;
@@ -142,3 +142,41 @@ class Solution {
     }
 }; 
 */
+bool solve(vector<int>& nums, vector<int>& quantity,unordered_map<int,int> & mapp,int i)
+    {
+        if(i==quantity.size())
+            return true;
+        unordered_map<int,int>::iterator it=mapp.begin();
+        pair<int,int> p=*it;
+        while(it!=mapp.end())
+        {
+            int k=(*it).second;
+            if(quantity[i]<=k)
+            {
+                k-=quantity[i];
+                cout<<"befor recur"<<k<<quantity[i]<<endl;
+                if(solve(nums,quantity,mapp,i+1)==1)
+                    return true;
+                k+=quantity[i];
+                cout<<"after recur"<<k<<endl;
+            }
+            
+        }
+        return false;
+    }
+    bool canDistribute(vector<int>& nums, vector<int>& quantity) {
+        unordered_map<int,int>mapp;
+        for(int i=0;i<nums.size();i++)
+        {
+            mapp[nums[i]]++;
+        }
+        int i=0;
+        bool ans=solve(nums,quantity,mapp,i);
+        return ans;
+    }
+    int main()
+    {
+        vector<int>nums={1,1,2,3};
+        vector<int>quantity={2,2};
+        cout<<canDistribute(nums,quantity);
+    }
