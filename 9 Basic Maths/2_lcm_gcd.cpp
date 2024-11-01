@@ -28,6 +28,6 @@ int lcm(int a,int b)
 }
 int main()
 {
-    int a=72,b=24,c=gcd_(a,b),d=lcm(a,b);
+    int a=72,b=30,c=gcd_(a,b),d=lcm(a,b);
     cout<<c<<"   "<<d;
 }

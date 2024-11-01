@@ -1,99 +1,117 @@
-#include <iostream>
-#include <vector>
-#include <cmath>
-
-#define M 1000000007
+#include<bits/stdc++.h>
 using namespace std;
-
-    vector<bool> Sieve(long long int n)
+int getsize(stack<int>s)
+{
+    int len=0;
+    while(!s.empty())
     {
-        // create a sieve array telling isPrime till 'n'
-        vector<bool> sieve(n + 1, true);
-        sieve[0] = sieve[1] = false;
-
-        /*for (long long int i = 2; i <= n; i++)*/
-        for (long long int i = 2; i * i <= n; i++) // Optimisation 2: (Outer loop):
-                                                   // if i becomes > sqrt(N), then the
-                                                   // inner loop does not work.
-        {
-            if (sieve[i] == true)
-            {
-                // means, sieve[i] is Prime and mark its multiples
-                //  as non-prime.
-                /*long long long long int j = i * 2;*/
-                long long int j = i * i; // Optimisation 1 (inner loop):
-                                         // first unmarked number would be i*i
-                                         // as, other have been marked by 2 to (i - 1).
-                while (j <= n)
-                {
-                    sieve[j] = false;
-                    j += i;
-                }
-            }
-        }
-        return sieve;
+        len++;
+        s.pop();
     }
-
-    vector<bool> segmentedSeive(long long int L, long long int R)
+    return len;
+}
+int findmid(stack<int>s,int len,int cnt)
+{
+    if(cnt==len)
     {
-        // Get me prime marking array.
-        // to be used to mark primes in segmented sieve.
-        vector<bool> sieve = Sieve(sqrt(R));
-        vector<long long int> basePrimes;
-        for (long long int i = 0; i < sieve.size(); i++)
-        {
-            if (sieve[i])
-                basePrimes.push_back(i);
-        }
-
-        vector<bool> segSieve(R - L + 1, true);
-        if (L == 1)
-        {
-            segSieve[0] = false;
-        }
-
-        for (auto prime : basePrimes)
-        {
-            long long int first_mul = (L / prime) * prime;
-            first_mul = first_mul < L ? first_mul + prime : first_mul;
-            long long int j = max(first_mul, prime * prime);
-            while (j <= R)
-            {
-                segSieve[j - L] = false;
-                j += prime;
-            }
-        }
-        return segSieve;
+        return s.top();
     }
-
-    long long primeProduct(long long L, long long R)
+    int val=s.top();
+    s.pop();
+    cnt++;
+    int result=findmid(s,len,cnt);
+    s.push(val);
+    return result;
+}
+int checksorted(stack<int>s,int chk)
+{
+    if(s.empty())
+        return 1;
+    int checkkk=0;
+    if(s.top()<chk)
     {
-        vector<bool> segSieve = segmentedSeive(L, R);
-        long long int ans = 1;
-        for (long long int i = 0; i < segSieve.size(); i++)
+        int val=s.top();
+        s.pop();
+        checkkk=checksorted(s,val);
+    }
+    else
+    {
+        return checkkk;
+    }
+    return checkkk;
+}
+void insertatbottom(stack<int>&s,int val)
+{
+    if(s.empty())
+    {
+        s.push(val);
+        return;
+    }
+    int value=s.top();
+    s.pop();
+    insertatbottom(s,val);
+    s.push(value);
+    return;
+}
+void reverser(stack<int>&s)
+{
+    if(s.empty())
+        return;
+    int val=s.top();
+    s.pop();
+    reverser(s);
+    insertatbottom(s,val);
+    return;
+}
+void sortedinsert(stack<int>&s,int val)
+{
+    if(s.empty())
+    {
+        s.push(val);
+        return;
+    }
+    if(val<s.top())
+    {
+        int value=s.top();
+        s.pop();
+        sortedinsert(s,val);
+        s.push(value);
+        return;
+    }
+    else
+    {
+        s.push(val);
+        return;
+    }
+}
+int main()
+{
+    stack<int>s;
+    // s.push(10);
+    // s.push(20);
+    // s.push(30);
+    // s.push(40);
+    // s.push(50);
+    // s.push(60);
+    // // int len=getsize(s);
+    // int cnt=0;
+    // cout<<len<<endl;
+    // int result=findmid(s,(len/2),cnt);
+    // cout<<result<<endl;
+    // cout<<len<<endl;
+    // cout<<checksorted(s,INT_MAX)<<endl;
+    // insertatbottom(s,9);
+    // reverser(s);
+    //sortedinsert(s,11);
+    int i=4;
+    while(i--)
+    {
+        if(i==1)
         {
-            if (segSieve[i])
-            {
-                long long int actualPrime = (L + i) % M;
-                ans = (ans * actualPrime) % M;
-            }
+            continue;
         }
-        return ans;
+        cout<<"yeah"<<i<<endl;
+
     }
-    void solve(vector<int>&s)
-    {
-        cout<<sizeof(s)<<endl;
-    }
-    int main()
-    {
-        /*
-        long long l=110,r=130,c=primeProduct(l,r);
-        cout<<c; 
-        */
-       vector<int>solves{20,30};
-       solve(solves);
-       int q=10;
-       int *p=&q;
-       int **m=&p;
-       cout<<&p<<"   "<<&m<<"   "<<*p<<"   "<<*m;
-    }
+    cout<<endl;
+}

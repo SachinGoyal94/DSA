@@ -15,7 +15,7 @@ int main()
     auto it=v.begin();
     it=it+2;
     cout<<*it<<endl;
-    cout<<"ok ok";
+    cout<<"ok ok"<<endl;
     while(it!=v.end())
     {
         cout<<*it<<endl;

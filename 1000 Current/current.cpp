@@ -1,43 +1,43 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-void checkseq(string s,string output,int index,vector<string>&ans)
+int chkred(stack<char>&s)
 {
-    if((index)==s.length())
+    int opcount=0;
+    while(s.top()!='(')
     {
-        cout<<output<<endl;
-        ans.push_back(output);
-        return;
+        char ch=s.top();
+        if(ch=='+' ||ch=='-' ||ch=='/' ||ch=='*')
+        {
+            opcount++;
+        }
+        s.pop();
     }
-    checkseq(s,output+s[index],index+1,ans);
-    checkseq(s,output,index+1,ans);
-}
-int robber(vector<int>nums,int index)
-{
-    if(index>=nums.size())
+    s.pop();
+    if(opcount>0)
     {
         return 0;
     }
-    int includer=nums[index]+robber(nums,index+2);
-    int excluder=0+robber(nums,index+1);
-    return max(includer,excluder);
+    return 1;
 }
 int main()
 {
-    string s="abc"; //for abc "  " is also a sequence 
-    string output=" ";
-    vector<string>ans;
-    checkseq(s,output,0,ans);
-    auto it=ans.begin();
-    while(it!=ans.end())
-    {
-        cout<<*it<<"   ";
-        it++;
-    }
-    cout<<endl;
-    vector<int>nums{2,7,9,10,2};
-    cout<<robber(nums,0);
+    // int str[5]={8,4,6,2,3};
+    // stack<int>s;
+    // vector<int>ans;
+    // s.push(-1);
+    // for(int i=0;i<=4;i++)
+    // {
+    //     while(s.top()>str[i])
+    //     {
+    //         s.pop();
+    //     }
+    //     ans.push_back(s.top());
+    //     s.push(str[i]);        
+    // }
+    // for(int i=0;i<5;i++)
+    // {
+    //     cout<<ans[i]<<"    ";
+    // }
+    int b=1<<3;
+    cout<<b;
 }
-
-//seq means if abc a comes befor b and c it can be ac or ab and empty string also allowed
-//so no of subsequences=2^n
-

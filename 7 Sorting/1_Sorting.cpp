@@ -40,7 +40,7 @@ void selectionSort(vector<int> &v) {  //select min element and put at correct po
 
 void insertionSort(vector<int> &v) {
   int n = v.size();
-  // i = 0, chhod deta hu
+  // i = 0, chhor deta hu
   for (int i = 1; i < n; ++i) {
     int key = v[i];
     int j = i - 1;
