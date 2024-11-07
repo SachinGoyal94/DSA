@@ -113,6 +113,29 @@ vector<vector<int>> zigzag(Node* root)
     }
     return ans;
 }
+int heightoftree(Node*root)
+{
+    if(!root)
+        return 0;
+    int lefty=heightoftree(root->left);
+    int righty=heightoftree(root->right);
+    int maxheight=max(lefty,righty);
+    return maxheight+1;
+}
+
+int diameteroftree(Node* root)
+{
+    if(!root)
+        return 0;
+    int option1=diameteroftree(root->left);
+    int option2=diameteroftree(root->right);
+    int option3=heightoftree(root->left)+heightoftree(root->right);
+    int maxi=max(option1,max(option2,option3));
+    return maxi;
+
+}
+
+
 int main()
 {
     Node* root=createtree();
@@ -135,6 +158,12 @@ int main()
         }
         cout<<endl;
     }
+
+    cout<<endl<<"max depth/height of tree is "<<heightoftree(root)<<endl;
+
+    cout<<endl<<"no of edges maximum diameter of tree is "<<diameteroftree(root)<<endl;
+    cout<<endl<<"no of nodes in maximum diameter of tree is "<<diameteroftree(root)+1<<endl;
+
 
 }
 //10 20 40 -1 -1 80 90 -1 -1 100 -1 -1  30 50 -1 -1 60 -1 -1
