@@ -176,7 +176,6 @@ Node* deletenode(Node* root,int val)
             root->left=deletenode(root->left,val);
         else
             root->right=deletenode(root->right,val);
-
     }
 }
 int main()
@@ -195,6 +194,6 @@ int main()
     cout<<findmax(root)<<endl;
     cout<<"time complexity of finding node is O(log N) "<<endl;
     cout<<"find value 130 "<<findvalue(root,130)<<endl;
-
-
+    deletenode(root,20);
+    levelordertraversal(root);
 }

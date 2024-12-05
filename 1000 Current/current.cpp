@@ -1,140 +1,115 @@
 #include <bits/stdc++.h>
 using namespace std;
-class Node
+class Deque
 {
+    private:
+      int *arr;
+      int n;
+      int front; 
+      int rear;
     public:
-    Node* left;
-    Node* right;
-    int data;
-    Node(int val)
+      Deque(int size) 
+      {
+          n = size;
+          arr = new int[size];
+          front = -1;
+          rear = -1;
+      }
+    void pushFront(int val) 
     {
-        left=NULL;
-        right=NULL;
-        data=val;
+      if(front == 0) 
+      {
+        cout << "Overflow" << endl;
+      }
+      else if(front == -1 && rear == -1) 
+      {
+        front++;
+        rear++;
+        arr[front] = val;
+      }
+      else 
+      {
+        front--;
+        arr[front] = val;
+      }
+    }
+    void popBack() 
+    {
+      if(front == -1 && rear == -1) 
+      {
+        cout << "Underflow" << endl;
+      }
+      else if(front == rear) {
+        arr[rear] = -1;
+        front = -1;
+        rear = -1;
+      }
+      else {
+        arr[rear] = -1;
+        rear--;
+      }
+    }
+    void pushBack(int val) {
+      if(rear == n-1) 
+      {
+        cout << "Overflow" << endl;
+      }
+      else if(front==-1 && rear == -1) 
+      {
+        rear++;
+        front++;
+        arr[rear]= val;
+      }
+      else {
+        rear++;
+        arr[rear] = val;
+      }
+    }
+    void popFront() {
+      if(front==-1 && rear==-1) 
+      {
+        cout << "Underflow" << endl;
+      }
+      else if(front == rear) 
+      {
+        //single element
+        arr[front] = -1;
+        front = -1;
+        rear = -1;
+      }
+      else {
+        arr[front] = -1;
+        front++;
+      }
+    }
+    void print() 
+    {
+      for(int i=0; i<n; i++) 
+      {
+        cout << arr[i] << " ";
+      }cout << endl;
     }
 };
-Node* createtree()
-{
-    int val;
-    cin>>val;
-    if(val==-1)
-        return NULL;
-    Node* root=new Node(val);
-    root->left=createtree();
-    root->right=createtree();
-    return root;
-}
-void preordertraversal(Node* root)
-{
-    //NLR
-    if(root==NULL)
-        return ;
-    cout<<root->data<<endl;
-    preordertraversal(root->left);
-    preordertraversal(root->right);
-}
-void inordertraversal(Node* root)
-{
-    //LNR
-    if(root==NULL)    
-        return ;
-    inordertraversal(root->left);
-    cout<<root->data<<endl;
-    inordertraversal(root->right);
-}
-void postordertraversal(Node* root)
-{
-    //LRN
-    if(root==NULL)
-        return ;
-    postordertraversal(root->left);
-    postordertraversal(root->right);
-    cout<<root->data<<endl;
-}
-void levelordertraversal(Node* root)
-{
-    if(root==NULL)
-        return;
-    queue<Node*>q;
-    q.push(root);
-    q.push(NULL);
-    while(!q.empty())
-    {
-        Node* front=q.front();
-        q.pop();
-        if(!front)
-        {
-            cout<<endl;
-            if(!q.empty())
-            {
-                q.push(NULL);
-            }
-        }
-        else
-        {
-            cout<<front->data<<"    ";
-            if(front->left)
-                q.push(front->left);
-            if(front->right)
-                q.push(front->right);
-            /*
-            right to left
-            if(front->right)
-                q.push(front->right);
-            if(front->left)
-                q.push(front->left);
-            */
-        }
-    }
-}
-vector<vector<int>> zigzag(Node* root)
-{
-    vector<vector<int>>ans;
-    queue<Node*>q;
-    q.push(root);
-    bool lefttoright=true;
-    while(!q.empty())
-    {
-        int width=q.size();
-        vector<int>one(width);
-        for(int i=0;i<width;i++)
-        {
-            Node* front=q.front();
-            q.pop();
-            int index=lefttoright ? i :width-i-1;
-            one[index]=front->data;
-            if(front->left)
-                q.push(front->left);
-            if(front->right)
-                q.push(front->right);
-        }
-        lefttoright=!lefttoright;
-        ans.push_back(one);
-    }
-    return ans;
-}
-int main()
-{
-    Node* root=createtree();
-    cout<<"-----------------"<<endl;
-    preordertraversal(root);
-    cout<<"-----------------"<<endl;
-    inordertraversal(root);
-    cout<<"-----------------"<<endl;
-    postordertraversal(root);
-    cout<<"-----------------"<<endl;
-    levelordertraversal(root);
-    cout<<"-----------------"<<endl;
-    vector<vector<int>>ans;
-    ans=zigzag(root);
-    for(int i=0;i<ans.size();i++)
-    {
-        for(int j=0;j<ans[i].size();j++)
-        {
-            cout<<ans[i][j]<<"    ";
-        }
-        cout<<endl;
-    }
 
+
+
+int main() 
+{
+  Deque dq(5);
+  
+  dq.pushBack(20);
+  dq.print();
+  dq.pushBack(45);
+  dq.print();
+  dq.pushBack(18);
+  dq.print();
+  dq.popFront();
+  dq.print();
+  dq.pushFront(9);
+  dq.print();
+  dq.pushFront(23);
+  dq.print();
+  dq.popFront();
+  dq.print();
+  return 0;
 }
-//10 20 40 -1 -1 80 90 -1 -1 100 -1 -1  30 50 -1 -1 60 -1 -1

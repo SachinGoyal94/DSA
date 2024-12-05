@@ -40,5 +40,9 @@ int main()
     {
         cout<<"non empty priority queue"<<endl;
     }
-
+    while(!pq.empty())
+    {
+        cout<<pq.top()<<endl;
+        pq.pop();
+    }
 }

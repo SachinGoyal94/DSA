@@ -101,7 +101,7 @@ vector<vector<int>> zigzag(Node* root)
         {
             Node* front=q.front();
             q.pop();
-            int index=lefttoright ? i :width-i-1;
+            int index=lefttoright ? i :width-i-1; 
             one[index]=front->data;
             if(front->left)
                 q.push(front->left);
