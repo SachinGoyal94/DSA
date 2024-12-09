@@ -75,7 +75,7 @@ void insertion(int position,int value,Node* &head,Node* &tail)
     }
     else
     {
-        if(position=(len+1))
+        if(position==(len+1))
         {
             tail=Tailinsertion(value,head,tail);
         }

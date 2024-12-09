@@ -23,7 +23,7 @@ void buildBST(int val,Node* &root)
     else
     {
         if(val<root->data)
-        {
+        { 
             buildBST(val,root->left);
         }
         else

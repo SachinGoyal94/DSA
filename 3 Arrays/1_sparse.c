@@ -66,7 +66,7 @@ int main()
     }
     */
     
-    /*
+    
     printf("addition \n");
     //addition
     //just add both sparse matrix and make their compact matrix 
@@ -116,7 +116,7 @@ int main()
         }
         printf("\n");
     }
-    */
+  
 
     //for multiplication just multiply 2 matrix and similarly
     //create their compact matrix

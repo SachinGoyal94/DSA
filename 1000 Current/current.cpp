@@ -1,115 +1,79 @@
 #include <bits/stdc++.h>
 using namespace std;
-class Deque
-{
-    private:
-      int *arr;
-      int n;
-      int front; 
-      int rear;
-    public:
-      Deque(int size) 
-      {
-          n = size;
-          arr = new int[size];
-          front = -1;
-          rear = -1;
-      }
-    void pushFront(int val) 
-    {
-      if(front == 0) 
-      {
-        cout << "Overflow" << endl;
-      }
-      else if(front == -1 && rear == -1) 
-      {
-        front++;
-        rear++;
-        arr[front] = val;
-      }
-      else 
-      {
-        front--;
-        arr[front] = val;
-      }
+
+class graph {
+    unordered_map<int, vector<pair<int, int>>> mp;
+
+public:
+    void insert(int u, int v, int w, int direction) {
+        if (direction == 0) {
+            mp[u].push_back({v, w});
+            mp[v].push_back({u, w});
+        } else {
+            mp[u].push_back({v, w});
+        }
     }
-    void popBack() 
-    {
-      if(front == -1 && rear == -1) 
-      {
-        cout << "Underflow" << endl;
-      }
-      else if(front == rear) {
-        arr[rear] = -1;
-        front = -1;
-        rear = -1;
-      }
-      else {
-        arr[rear] = -1;
-        rear--;
-      }
-    }
-    void pushBack(int val) {
-      if(rear == n-1) 
-      {
-        cout << "Overflow" << endl;
-      }
-      else if(front==-1 && rear == -1) 
-      {
-        rear++;
-        front++;
-        arr[rear]= val;
-      }
-      else {
-        rear++;
-        arr[rear] = val;
-      }
-    }
-    void popFront() {
-      if(front==-1 && rear==-1) 
-      {
-        cout << "Underflow" << endl;
-      }
-      else if(front == rear) 
-      {
-        //single element
-        arr[front] = -1;
-        front = -1;
-        rear = -1;
-      }
-      else {
-        arr[front] = -1;
-        front++;
-      }
-    }
-    void print() 
-    {
-      for(int i=0; i<n; i++) 
-      {
-        cout << arr[i] << " ";
-      }cout << endl;
+
+    void djik() {
+        set<pair<int, int>> s; // {distance, node}
+        vector<int> v(9, INT_MAX); // Distance array initialized to infinity
+        v[0] = 0; // Starting node distance is 0
+        s.insert({0, 0}); // Insert starting node into the set
+
+        while (!s.empty()) {
+            auto it = s.begin();
+            int dist = it->first;
+            int val = it->second;
+            s.erase(it);
+
+            // Get the adjacency list of the current node
+            vector<pair<int, int>> vect = mp[val];
+            for (int i = 0; i < vect.size(); i++) {
+                int value = vect[i].first; // Neighbor node
+                int w = vect[i].second;   // Edge weight
+
+                // Relaxation: Check if we found a shorter path
+                if (dist + w < v[value]) {
+                    // Remove the old distance if it exists in the set
+                    auto record = s.find({v[value], value});
+                    if (record != s.end())
+                        s.erase(record);
+
+                    // Update the distance and reinsert into the set
+                    v[value] = dist + w;
+                    s.insert({v[value], value});
+                }
+            }
+        }
+
+        // Print the shortest distances
+        cout << "Shortest distances from node 0:" << endl;
+        for (int i = 0; i < v.size(); i++) {
+            if (v[i] == INT_MAX) {
+                cout << i << ": INF" << endl;
+            } else {
+                cout << i << ": " << v[i] << endl;
+            }
+        }
     }
 };
 
+int main() {
+    graph g;
+    g.insert(0, 1, 4, 0);
+    g.insert(0, 7, 8, 0);
+    g.insert(7, 1, 11, 0);
+    g.insert(2, 1, 8, 0);
+    g.insert(2, 8, 2, 0);
+    g.insert(2, 5, 4, 0);
+    g.insert(2, 3, 7, 0);
+    g.insert(7, 8, 7, 0);
+    g.insert(7, 6, 1, 0);
+    g.insert(8, 6, 6, 0);
+    g.insert(6, 5, 2, 0);
+    g.insert(5, 3, 14, 0);
+    g.insert(5, 4, 10, 0);
+    g.insert(3, 4, 9, 0);
 
-
-int main() 
-{
-  Deque dq(5);
-  
-  dq.pushBack(20);
-  dq.print();
-  dq.pushBack(45);
-  dq.print();
-  dq.pushBack(18);
-  dq.print();
-  dq.popFront();
-  dq.print();
-  dq.pushFront(9);
-  dq.print();
-  dq.pushFront(23);
-  dq.print();
-  dq.popFront();
-  dq.print();
-  return 0;
+    g.djik();
 }

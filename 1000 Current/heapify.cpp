@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-void heapify(int *arr,int i,int index)  //index is no of elements   //logn
+void heapify(int *arr,int i,int index)  //index is no of elements
 {
     int largestvalueindex=i;  //suppose i pe largest value
     int leftchild=2*i;
@@ -20,14 +20,14 @@ void heapify(int *arr,int i,int index)  //index is no of elements   //logn
         heapify(arr,i,index);
     }
 }
-void buildheap(int *arr,int n)            //o(n)
+void buildheap(int *arr,int n)
 {
     for(int i=(n/2);i>=1;i--)
     {
         heapify(arr,i,n);
     }
 }
-void HeapSort(int *arr,int n)            //O(log n)
+void HeapSort(int *arr,int n)
 {
     while(n>1)//n=1 pe single node which is always sorted 
     {
@@ -49,7 +49,7 @@ class Heap
         index=0;//jab bhi mujhe insert krna hoga, tab index+1 krke insert krdena
         arr=new int[n];  //0 se start coz left child ka index acc. to level order array is 2*i and that rightchild=2*i+1
     }
-    void insert(int val)   //O(log n)
+    void insert(int val)
     {
         if(index==size)
         {
@@ -77,7 +77,7 @@ class Heap
     {
         for(int i=1;i<=index;i++)//parent index ko 1 se start kiya index print krne se inserted elements aayenge
                                  // size se sare aa jayenge so garbage values inside array also printed and deleted nodes also get printed 
-        {                        //O(n)
+        {
             cout<<arr[i]<<"    ";
         }
         /*
@@ -89,7 +89,7 @@ class Heap
         */
     }
     void deletion()  //deletion of root node always
-    {                //O(log n)
+    {
         swap(arr[1],arr[index]);
         index--;
         heapify(arr,1,index);
@@ -99,19 +99,25 @@ class Heap
 int main()
 {
     cout<<"build heap of array"<<endl;
-    int arr[]={-1,10,20,30,40,50};// 50 10 30 40 20 
+    int arr[10]={-1,10,20,30,40,50};// 50 10 30 40 20 
     int n=6;
     buildheap(arr,n);
     cout<<"heap builded"<<endl;
     for(int i=1;i<n;i++)
         cout<<arr[i]<<"    ";
     cout<<endl;
-
-    cout<<"Heap Sort"<<endl;
-    HeapSort(arr,n);
-    for(int i=1;i<n;i++)
+    arr[6]=60;
+    buildheap(arr,7);
+    for(int i=1;i<7;i++)
         cout<<arr[i]<<"    ";
     cout<<endl;
+    
+    // cout<<"Heap Sort"<<endl;
+    // HeapSort(arr,n);
+    // for(int i=1;i<n;i++)
+    //     cout<<arr[i]<<"    ";
+    // cout<<endl;
+    
     
     // Heap h(5);
     // h.insert(10);

@@ -71,9 +71,9 @@ int main()
     vector<int> ans;
 
     //prevSmallerElement(arr,n,ans);
-    //nextSmallerElement(arr,n,ans);
+    nextSmallerElement(arr,n,ans);
     //nextgreaterelement(arr,n,ans);
-    prevgreaterelement(arr,n,ans);
+    //prevgreaterelement(arr,n,ans);
     for(auto i: ans) 
     {
         cout << i << " ";

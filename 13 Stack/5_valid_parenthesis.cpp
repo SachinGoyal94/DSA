@@ -7,9 +7,9 @@ int main()
     string k="({())})";  //false
     string m="({)}()";   //false
     stack<char>st;
-    for(int i=0;i<s.size();i++)
+    for(int i=0;i<k.size();i++)
     {
-        char ch=s[i];
+        char ch=k[i];
         if(ch=='(' || ch=='{' || ch=='[')
         {
             st.push(ch);
@@ -19,21 +19,18 @@ int main()
             if(ch==')' && !st.empty() && st.top()=='(')
             {
                 cout<<"true";
-                return 0;
             }
             else
             {
                 if(ch=='}' && !st.empty() && st.top()=='{')
                 {
                     cout<<"true";
-                    return 0;
                 }   
                 else
                 {
                     if(ch==']' && !st.empty() && st.top()=='[')
                     {
                         cout<<"true";
-                        return 0;
                     }
                     else
                     {

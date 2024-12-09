@@ -258,6 +258,6 @@ int main()
     else
     {
         bool checking=checkpalindrome(mid->prev,mid->next);
-        cout<<"is palindrome"<<checking<<endl;
+        cout<<"is palindrome "<<checking<<endl;
     }
 }
