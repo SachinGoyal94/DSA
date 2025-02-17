@@ -1,117 +1,90 @@
 #include<bits/stdc++.h>
 using namespace std;
-int getsize(stack<int>s)
+class graph
 {
-    int len=0;
-    while(!s.empty())
+    unordered_map<int,vector<pair<int,int>>>mp;
+    public:
+    void insert(int i,int j,int wt,int direction)
     {
-        len++;
-        s.pop();
+        if(direction==1)
+            mp[i].push_back({j,wt});
+        else
+        {
+            mp[i].push_back({j,wt});
+            mp[j].push_back({i,wt});
+        }    
     }
-    return len;
-}
-int findmid(stack<int>s,int len,int cnt)
-{
-    if(cnt==len)
+    void printer(int n)
     {
-        return s.top();
+        for(int i=0;i<n;i++)
+        {
+            cout<<i<<"   ";
+            vector<pair<int,int>>temp=mp[i];
+            for(auto & k:temp)
+            {
+                cout<<"{ "<<k.first<<" , "<<k.second<<" } ";
+            }
+            cout<<endl;
+        }
     }
-    int val=s.top();
-    s.pop();
-    cnt++;
-    int result=findmid(s,len,cnt);
-    s.push(val);
-    return result;
-}
-int checksorted(stack<int>s,int chk)
-{
-    if(s.empty())
-        return 1;
-    int checkkk=0;
-    if(s.top()<chk)
-    {
-        int val=s.top();
-        s.pop();
-        checkkk=checksorted(s,val);
-    }
-    else
-    {
-        return checkkk;
-    }
-    return checkkk;
-}
-void insertatbottom(stack<int>&s,int val)
-{
-    if(s.empty())
-    {
-        s.push(val);
-        return;
-    }
-    int value=s.top();
-    s.pop();
-    insertatbottom(s,val);
-    s.push(value);
-    return;
-}
-void reverser(stack<int>&s)
-{
-    if(s.empty())
-        return;
-    int val=s.top();
-    s.pop();
-    reverser(s);
-    insertatbottom(s,val);
-    return;
-}
-void sortedinsert(stack<int>&s,int val)
-{
-    if(s.empty())
-    {
-        s.push(val);
-        return;
-    }
-    if(val<s.top())
-    {
-        int value=s.top();
-        s.pop();
-        sortedinsert(s,val);
-        s.push(value);
-        return;
-    }
-    else
-    {
-        s.push(val);
-        return;
-    }
-}
+    bool cycleDetectionUndirectedBFS(int src,unordered_map<int,bool>& visited) {
+        queue<int> q;
+        unordered_map<int,int> parent;
+        
+        q.push(src);
+        visited[src] = true;
+        parent[src] = -1;
+  
+        while(!q.empty()) {
+          int frontNode = q.front();
+          q.pop();
+  
+          for(auto nbr: mp[frontNode]) {
+            if(!visited[nbr.first]) {
+              q.push(nbr.first);
+              visited[nbr.first] = true;
+              parent[nbr.first] = frontNode;
+            }
+            //cycle detection case
+            else if(visited[nbr.first] == true && nbr.first != parent[frontNode]) {
+              //cycle present
+              return true;
+            } 
+          }
+        }
+        return false;
+      }
+      bool isCycle(int n) 
+      {
+          bool ans = false;
+            unordered_map<int,bool> visited;
+            for(int i=0; i<n; i++) {
+              if(!visited[i]) {
+                 ans = cycleDetectionUndirectedBFS(i,visited);
+                if(ans == true) {
+                  break;
+                }
+              }
+            }
+          return ans;
+      }
+};
 int main()
 {
-    stack<int>s;
-    // s.push(10);
-    // s.push(20);
-    // s.push(30);
-    // s.push(40);
-    // s.push(50);
-    // s.push(60);
-    // // int len=getsize(s);
-    // int cnt=0;
-    // cout<<len<<endl;
-    // int result=findmid(s,(len/2),cnt);
-    // cout<<result<<endl;
-    // cout<<len<<endl;
-    // cout<<checksorted(s,INT_MAX)<<endl;
-    // insertatbottom(s,9);
-    // reverser(s);
-    //sortedinsert(s,11);
-    int i=4;
-    while(i--)
-    {
-        if(i==1)
-        {
-            continue;
-        }
-        cout<<"yeah"<<i<<endl;
-
-    }
-    cout<<endl;
+    graph g;
+    g.insert(0,1,3,0);
+    g.insert(0,2,2,0);
+    g.insert(0,3,11,0);
+    g.insert(2,5,15,0);
+    // g.insert(2,1,1,0);
+    g.insert(1,4,18,0);
+    g.insert(4,8,15,0);
+    g.insert(1,6,17,0);
+    g.insert(3,7,13,0);
+    g.insert(9,10,13,0);
+    g.insert(10,11,13,0);
+    if(g.isCycle(13))
+        cout<<"cycle present"<<endl;
+    else    
+        cout<<"cycle not present"<<endl;
 }

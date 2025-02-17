@@ -40,11 +40,11 @@ class graph
             vector<pair<int,int>>temp=mp[front];
             for(auto & k:temp)
             {
+                indegree[k.first]++;
                 if(!visited[k.first])
                 {
                     q.push(k.first);
                     visited[k.first]=1;
-                    indegree[k.first]++;
                 }
             }
         }

@@ -1,3 +1,5 @@
+//we know topological sort can only be done on directed cyclic graph else it gives wrong output
+
 #include<bits/stdc++.h>
 using namespace std;
 class graph
@@ -40,11 +42,11 @@ class graph
             vector<pair<int,int>>temp=mp[front];
             for(auto & k:temp)
             {
+                indegree[k.first]++;
                 if(!visited[k.first])
                 {
                     q.push(k.first);
                     visited[k.first]=1;
-                    indegree[k.first]++;
                 }
             }
         }
@@ -98,33 +100,6 @@ class graph
         }
         return result;
     }
-    //dfs travel to find topological sorting 
-    void dfs(int n,unordered_map<int,bool>&visited,stack<int>&s)
-    {
-        visited[n]=1;
-        vector<pair<int,int>>temp=mp[n];
-        for(auto & k:temp)
-        {
-            if(!visited[k.first])
-            {
-                dfs(k.first,visited,s);
-            }
-        }
-		s.push(n);
-    }
-    stack<int> dfshelper(int n)
-    {
-        unordered_map<int,bool>visited;
-		stack<int>s;
-        for(int i=0;i<n;i++)
-        {
-            if(!visited[i])
-            {
-                dfs(i,visited,s);
-            }
-        }
-		return s;
-    }
 };
 int main()
 {
@@ -132,15 +107,12 @@ int main()
     g.insert(0,1,3,1);
     g.insert(1,2,2,1);
     g.insert(2,3,11,1);
-    g.insert(2,4,1,1);
-	g.insert(3,5,1,1);
-	g.insert(4,5,1,1);
-	g.insert(5,6,1,1);
-    g.insert(7,8,1,1);
-    g.insert(9,10,1,1);
-    g.printer(11);
+    g.insert(3,4,1,1);
+    g.insert(4,5,1,1);
+    g.insert(5,2,1,1);
+    g.printer(5);
 	cout<<endl;
-    vector<vector<int>>ans=g.bfshelper(11);
+    vector<vector<int>>ans=g.bfshelper(5);
     for(auto & i:ans)
     {
         for(auto& j:i)
@@ -150,14 +122,6 @@ int main()
         cout<<endl;
     }
     cout<<endl;
-    stack<int>s=g.dfshelper(11);
-	while(!s.empty())
-	{
-		cout<<s.top()<<"   ";
-		s.pop();
-	}
-    //9   10   7   8   0   1   2   4   3   5   6 
-    // output for dfs can be 0 1 2 4 3 5 6   
-    //                       9 10  
-    //                       7 8
+    //see not it gives 0,1 that is there is a cycle present else atleast 
+    // it must gives all nodes in topological order
 }

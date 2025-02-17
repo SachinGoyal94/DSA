@@ -115,116 +115,107 @@ class graph
         }
     }
     
-    //what if there are disconnected components also
-    void dfsdisconnectedgraph(int n)
+    
+    bool cycleDetectionUndirectedBFS(int src,unordered_map<int,bool>& visited) {
+        queue<int> q;
+        unordered_map<int,int> parent;
+        
+        q.push(src);
+        visited[src] = true;
+        parent[src] = -1;
+  
+        while(!q.empty()) 
+        {
+            int frontNode = q.front();
+            q.pop();    
+            for(auto k: mp[frontNode]) 
+            {
+                if(!visited[k.first]) 
+                {
+                    q.push(k.first);
+                    visited[k.first] = true;
+                    parent[k.first] = frontNode;
+                }
+                else if(visited[k.first] == true && k.first != parent[frontNode]) 
+                {
+                    return true;
+                } 
+            }
+        }
+        return false;
+      }
+    bool isCycle(int n) 
+      {
+          bool ans = false;
+            unordered_map<int,bool> visited;
+            for(int i=0; i<n; i++) 
+            {
+                if(!visited[i]) 
+                {
+                    ans = cycleDetectionUndirectedBFS(i,visited);
+                    if(ans == true) 
+                        break;
+                }
+            }
+          return ans;
+      }
+    bool checkCycleDfsHelper(int src, unordered_map<int,bool>& vis, int parent) 
+      {
+        vis[src] = true;
+        
+        for(auto k: mp[src]) 
+        {
+            if(!vis[k.first]) 
+            {
+                bool ans = checkCycleDfsHelper(k.first, vis,src);
+                if(ans == true) 
+                    return true;
+            }
+            else if(vis[k.first] == true && k.first != parent) 
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    bool isCycledfs(int n) 
     {
+        bool ans = false;
         unordered_map<int,bool> visited;
-        for(int i=0;i<n;i++)
+        int parent = -1;
+        for(int i=0; i<n; i++) 
         {
-            if(!visited[n])
+            if(!visited[i]) 
             {
-                dfshelper(i,visited);
+                ans = checkCycleDfsHelper(i,visited, parent);
+                if(ans) 
+                    break;
             }
         }
-    }
-    int cycledetection()//using bfs
-    {
-        unordered_map<int,bool>visited;
-        unordered_map<int,int>parent;
-        unordered_map<int,int>child;        
-        queue<int>q;
-        q.push(0);
-        parent[0]=-1;
-        visited[0]=true;
-        while(!q.empty())
-        {
-            int front=q.front();
-            q.pop();
-            vector<pair<int,int>>temp=mp[front];
-            for(int i=0;i<temp.size();i++)
-            {
-                int node=temp[i].first;
-                if(visited[node])
-                {
-                    if(parent[front]!=node )
-                    {
-                        //cycle detected
-                        return 1;
-                    }
-                }
-                else
-                {
-                    parent[node]=front;
-                    child[front]=node;
-                    visited[node]=true;
-                    q.push(node);
-                }
-            }
-        }
-        return 0;
-    }
-    int dfsdetect(int n,unordered_map<int,bool>&visited,unordered_map<int,bool>&parent,int p)
-    {
-        if(visited[n] && parent[p]!=n)
-        {
-            return 1;
-        }
-        if(!visited[n])
-        {
-            visited[n]=true;
-            vector<pair<int,int>>temp=mp[n];
-            parent[n]=p;
-            for(int i=0;i<temp.size();i++)
-            {
-                dfsdetect(temp[i].first,visited,parent,n);
-            }
-        }
-        return 0;
-    }
-    int dfscycle()
-    {
-        unordered_map<int,bool>visited;
-        unordered_map<int,bool>parent;
-        for(int i=0;i<5;i++)
-        {
-            dfsdetect(i,visited,parent,-1);
-        }
+        return ans;
     }
 };
 int main()
 {
     graph g;
-    //0 is the source node
-    //(u,v,weight,direction)  u,v connecting nodes weight=distance of one node to another direction 1=u->v 0 u<=>v
-    g.insert(0,1,3,0);  //0 1
-    g.insert(1,2,18,0); // 1 0   1 2
-    g.insert(1,3,15,0); // 1 3
-    g.insert(2,4,1,0);  //2 4 2 1
-    
-    
-    
-    cout<<endl<<"full graph "<<endl;
-    g.fullprint(5);
-    
-    cout<<endl<<"bfs traversal"<<endl;
-    g.bfstraversal(0);
-    cout<<endl<<"dfs traversal"<<endl;
-    g.dfstraversal();
-    cout<<endl;
+    g.insert(0,1,3,0);
+    g.insert(0,2,2,0);
+    g.insert(0,3,11,0);
+    g.insert(2,5,15,0);
+    // g.insert(2,1,1,0);
+    g.insert(1,4,18,0);
+    g.insert(4,8,15,0);
+    g.insert(1,6,17,0);
+    g.insert(3,7,13,0);
+    g.insert(9,10,13,0);
+    g.insert(10,11,13,0);
 
-    g.insert(9,10,4,1);
-    g.fullprint(10);
-    cout<<endl<<"bfs traversal for disconnected graphs"<<endl;
-    g.bfsdisconnected(10);
-    cout<<endl<<"dfs traversal for disconnected graphs"<<endl;//same can be applied for bfs traversal
-    g.dfsdisconnectedgraph(10);
-
-    cout<<"checking cycle detection"<<endl;
-    int cycle=g.cycledetection();
-    cout<<cycle;
-
-    cout<<"checking cycle detection using dfs"<<endl;
-    int cycledfs=g.dfscycle();
-    cout<<cycledfs;
-
+    if(g.isCycle(13))
+        cout<<"cycle present"<<endl;
+    else    
+        cout<<"cycle not present"<<endl;
+    if(g.isCycledfs(13))
+        cout<<"cycle present"<<endl;
+    else    
+        cout<<"cycle not present"<<endl;
 }

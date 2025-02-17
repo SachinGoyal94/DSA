@@ -17,7 +17,6 @@ class graph
             mp[u].push_back({v,w});
         }
     }
-    
     void fullprint(int n )
     {
         for(int i=0;i<n;i++)
@@ -82,13 +81,9 @@ int main()
     g.insert(4,8,11,1);
     g.insert(2,8,1,1);
     g.insert(3,7,13,1);
-    
     cout<<endl<<"full graph "<<endl;
     g.fullprint(8);
-    
     cout<<endl<<"bfs traversal"<<endl;
     g.bfstraversal(0,8);
-
     //g.shortestpath();
-
 }

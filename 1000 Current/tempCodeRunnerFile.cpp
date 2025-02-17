@@ -1,1 +1,16 @@
-cout<<endl<<"next part"<<endl<<endl;
+g.insert(0,1,3,0);
+    // g.insert(0,2,2,0);
+    // g.insert(0,3,11,0);
+    // g.insert(2,5,15,0);
+    // g.insert(2,1,1,0);
+    // g.insert(1,4,18,0);
+    // g.insert(4,8,15,0);
+    // g.insert(1,6,17,0);
+    // g.insert(3,7,13,0);
+    // g.insert(9,10,4,0);
+    // g.insert(10,11,4,0);
+    // g.printer(12);
+    // g.bfshelper(12);
+    // cout<<endl;
+    // g.dfshelper(12);
+    // cout<<endl;

@@ -1,4 +1,17 @@
 //cycle detection directed graphs
+//cycle means atleast 1 node get repeats 
+/*
+    A-->B               A->B->C->D->A  cycle
+    -    |
+    |    -
+    D<-- C    
+*/
+/*
+    A-->B               A->B->C->D  and A->D  closed loop but not a cycle 
+    |    |                                    as no node repeats in path
+    -    -
+    D<-- C    
+*/
 #include<bits/stdc++.h>
 using namespace std;
 class graph
@@ -128,66 +141,62 @@ class graph
         }
         
     }
-    int cycledetection()//using bfs
-    {
-        unordered_map<int,bool>visited;
-        unordered_map<int,int>parent;        
-        queue<int>q;
-        q.push(0);
-        while(!q.empty())
+    bool dfsHelper(int node, unordered_map<int,bool>& vis,unordered_map<int,bool>& dfsTracker) 
+    {    
+        vis[node] = true;
+        dfsTracker[node] = true;
+        
+        for(auto nbr: mp[node]) 
         {
-            int front=q.front();
-            q.pop();
-            vector<pair<int,int>>temp=mp[front];
-            for(int i=0;i<temp.size();i++)
+            if(!vis[nbr.first]) 
             {
-                int node=temp[i].first;
-                if(visited[node])
-                {
-                    if(parent[node]!=front)
-                    {
-                        //cycle detected
-                        return 1;
-                    }
-                }
-                else
-                {
-                    parent[node]=front;
-                    visited[node]=true;
-                    q.push(node);
-                }
+                bool ans = dfsHelper(nbr.first, vis,dfsTracker);
+                if(ans == true)
+                    return true;
+            }
+            else if(vis[nbr.first] == true && dfsTracker[nbr.first] == true) 
+            {
+                return true;
             }
         }
-        return 0;
+        dfsTracker[node] = false;
+        return false;
+    }
+    bool isCyclic(int n) 
+    {
+        bool ans = false;
+        unordered_map<int,bool> vis;
+        unordered_map<int,bool> dfsTracker;
+        
+        for(int i=0; i<n; i++) 
+        {
+            if(!vis[i]) 
+            {
+                ans = dfsHelper(i,vis,dfsTracker);                    
+                if(ans == true) 
+                    break;
+            }
+        }
+        return ans;
     }
 };
 int main()
 {
     graph g;
-    //0 is the source node
-    //(u,v,weight,direction)  u,v connecting nodes weight=distance of one node to another direction 1=u->v 0 u<=>v
-    g.insert(0,1,3,1);
-    g.insert(1,2,18,1);
-    g.insert(1,3,15,1);
-    g.insert(2,3,1,1);
-    
-    cout<<endl<<"full graph "<<endl;
-    g.fullprint(4);
-    
-    cout<<endl<<"bfs traversal"<<endl;
-    g.bfstraversal(0);
-    cout<<endl<<"dfs traversal"<<endl;
-    g.dfstraversal();
-    cout<<endl;
+    g.insert(1,0,3,1);
+    g.insert(0,2,2,1);
+    g.insert(0,3,11,1);
+    g.insert(2,5,15,1);
+    g.insert(2,1,1,1);
+    g.insert(1,4,18,1);
+    g.insert(4,8,15,1);
+    g.insert(1,6,17,1);
+    g.insert(3,7,13,1);
+    g.insert(9,10,13,1);
+    g.insert(10,11,13,1);
 
-    g.insert(9,10,4,1);
-    g.fullprint(10);
-    cout<<endl<<"bfs traversal for disconnected graphs"<<endl;
-    g.bfsdisconnected(10);
-    cout<<endl<<"dfs traversal for disconnected graphs"<<endl;//same can be applied for bfs traversal
-    g.dfsdisconnectedgraph(10);
-
-    cout<<"checking cycle detection"<<endl;
-    int cycle=g.cycledetection();
-    cout<<cycle;
+    if(g.isCyclic(13))
+        cout<<"cycle present"<<endl;
+    else    
+        cout<<"cycle not present"<<endl;
 }
