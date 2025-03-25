@@ -1,7 +1,20 @@
+/*
+undirected/directed + unweighted=>bfs
+undirected/directed + weighted=>djikstra non negative weigths only
+undirected/directed + -ve weighted=>bellman ford -ve weights allowed
+
+directed acyclic=topological  sort
+*/
+
+
+
+
+
+
 //single source shortest path 
 //if undirected graph and we have to calc short. path on the basis of 
 //distance/weight and if weights are not given assume every node has same weight
-//only works for uniform weights only
+//only works for uniform weights only directed/undirected both
 
 //bfs use krenge toh target node jab first time visit hogi vahi shortest distance hoga
 #include<bits/stdc++.h>

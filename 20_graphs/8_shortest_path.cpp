@@ -1,4 +1,6 @@
-//what if different weights are there
+//handles every case of same diff undire dire any combo works here
+//but bfs recommend for unweighted direct/undirect so don't use this code
+//use djiksta for directed/undirected weighted graphs
 #include<bits/stdc++.h>
 using namespace std;
 class graph

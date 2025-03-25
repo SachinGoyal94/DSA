@@ -194,7 +194,7 @@ int main()
     g.insert(3,7,13,1);
     g.insert(9,10,13,1);
     g.insert(10,11,13,1);
-
+    g.printgraph();
     if(g.isCyclic(13))
         cout<<"cycle present"<<endl;
     else    

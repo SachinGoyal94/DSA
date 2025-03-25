@@ -1,4 +1,4 @@
-//cycle detection directed graphs
+//cycle detection undirected graphs
 #include<bits/stdc++.h>
 using namespace std;
 class graph
@@ -136,7 +136,7 @@ class graph
                     visited[k.first] = true;
                     parent[k.first] = frontNode;
                 }
-                else if(visited[k.first] == true && k.first != parent[frontNode]) 
+                else if(visited[k.first] == true &&   k.first != parent[frontNode]) 
                 {
                     return true;
                 } 

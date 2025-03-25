@@ -1,3 +1,9 @@
+// TC O(E log V)
+//non negative weighed directed/undirected only
+//in standard djikstra updation and reinsertion of pairs in sets not allowed and its TC is O(V^2) but  
+//to reduce TC we use this method
+//gives min distance of every node from source node
+
 #include<bits/stdc++.h>
 using namespace std;
 class graph
@@ -30,10 +36,10 @@ class graph
             cout<<"}"<<endl;
         }
     }
-    void djik()
+    void djik(int n)
     {
         set<pair<int,int>>s;
-        vector<int>v(9,INT_MAX);
+        vector<int>v(n,INT_MAX);
         s.insert(make_pair(0,0));
         v[0]=0;
         while(!s.empty())
@@ -66,19 +72,14 @@ class graph
 int main()
 {
     graph g;
-    g.insert(0,1,4,0);
-    g.insert(0,7,8,0);
-    g.insert(7,1,11,0);
-    g.insert(2,1,8,0);
-    g.insert(2,8,2,0);
-    g.insert(2,5,4,0);
-    g.insert(2,3,7,0);
-    g.insert(7,8,7,0);
-    g.insert(7,6,1,0);
-    g.insert(8,6,6,0);
-    g.insert(6,5,2,0);
-    g.insert(5,3,14,0);
-    g.insert(5,4,10,0);
-    g.insert(3,4,9,0);
-    g.djik();
+    g.insert(0,3,6,1);
+    g.insert(0,5,9,1);
+    g.insert(5,4,2,1);
+    g.insert(3,4,11,1);
+    g.insert(5,1,14,1);
+    g.insert(4,1,9,1);
+    g.insert(4,2,10,1);
+    g.insert(3,2,15,1);
+    g.insert(1,2,7,1);
+    g.djik(6);
 }
