@@ -63,12 +63,13 @@ class graph
             }
         }
 
-        //printing the distances
+        //printing the destinations as x axis
         for(int dest=0;dest<n;dest++)
         {
             cout<<"     "<<dest<<"    ";
         }
         cout<<endl;
+        //printing source on y axis and distances as values
         for(int source=0;source<n;source++)
         {
             cout<<source<<"    ";

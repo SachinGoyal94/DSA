@@ -127,8 +127,6 @@ class graph
             }
         }
     }
-    
-    //what if there are disconnected components also
     void dfsdisconnectedgraph(int n)
     {
         unordered_map<int,bool> visited;
@@ -154,7 +152,7 @@ class graph
                 if(ans == true)
                     return true;
             }
-            else if(vis[nbr.first] == true && dfsTracker[nbr.first] == true) 
+            else if(dfsTracker[nbr.first] == true) 
             {
                 return true;
             }

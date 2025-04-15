@@ -171,7 +171,7 @@ class graph
                 if(ans == true) 
                     return true;
             }
-            else if(vis[k.first] == true && k.first != parent) 
+            else if(k.first != parent) 
             {
                 return true;
             }

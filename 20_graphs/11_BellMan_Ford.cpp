@@ -42,7 +42,6 @@ class graph
             for(auto& k:mp)
             {
                 int node=k.first;
-                //k=int,vector<pair<intint>>
                 for(auto & l:k.second)
                 {
                     int val=l.first;

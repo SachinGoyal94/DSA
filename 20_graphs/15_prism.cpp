@@ -30,11 +30,11 @@ class graph
             cout<<"}"<<endl;
         }
     }
-    int findmin(vector<int>visited,vector<int>dist,int n)
+    int findmin(vector<int>&visited,vector<int>&dist,int n)
     {
         int maxi=INT_MAX;
-        int index;
-        for(int i=0;i<5;i++)
+        int index=-1;
+        for(int i=0;i<n;i++)
         {
             if(dist[i]<maxi && !visited[i])
             {
@@ -49,21 +49,20 @@ class graph
         vector<int>dist(n,INT_MAX);
         dist[0]=0;
         vector<int>visited(n,false);
-        vector<int>parent(n);
-
-        int count=0;
-        while(count<n)
+        vector<int>parent(n,-1);
+        while(1)
         {
-            count++;
             int index=findmin(visited,dist,n);
-            //yahan tak index mil gya kis node se span form krna abhi 
+            if(index==-1)
+                break;
+            //yahan tak index mil gya is node se span form krna abhi 
             visited[index]=true;
             vector<pair<int,int>>v=mp[index];
             for(int i=0;i<v.size();i++)
             {
                 int value=v[i].first;
                 int weight=v[i].second;
-                if(weight<dist[value])
+                if(!visited[value] && weight<dist[value])
                 {
                     parent[value]=index;
                     dist[value]=weight;
@@ -75,6 +74,21 @@ class graph
         {
             cout<<dist[k]<<" "<<visited[k]<<" "<<parent[k]<<" "<<endl;
         }
+        //finding min weigth
+        int sum = 0;
+        for(int u = 0; u <n; u++){
+            if(parent[u] == -1) 
+                continue;
+            for(auto &edge: mp[u])
+            {
+                int v = edge.first;
+                int w = edge.second;
+                if(v == parent[u]){
+                    sum += w;
+                }
+            }
+        }
+        cout<<sum<<endl;
     }
 };
 int main()

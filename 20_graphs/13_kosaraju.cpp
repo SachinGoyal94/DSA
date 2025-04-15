@@ -64,7 +64,7 @@ class graph
             if(!visited[i])
                 toposort(i,s,visited);
         }
-        unordered_map<int,vector<pair<int,int>>>mpnew;
+        unordered_map<int,vector<pair<int,int>>>mpnew; //creating graph with reverse edges
         for(auto &k:mp)
         {
             int node=k.first;
