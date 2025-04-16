@@ -71,20 +71,26 @@ class graph
 };
 int main()
 {
-    graph g;
-    g.insert(0,1,3,0);
-    g.insert(0,2,2,0);
-    g.insert(0,3,11,0);
-    g.insert(2,5,15,0);
-    // g.insert(2,1,1,0);
-    g.insert(1,4,18,0);
-    g.insert(4,8,15,0);
-    g.insert(1,6,17,0);
-    g.insert(3,7,13,0);
-    g.insert(9,10,13,0);
-    g.insert(10,11,13,0);
-    if(g.isCycle(13))
-        cout<<"cycle present"<<endl;
-    else    
-        cout<<"cycle not present"<<endl;
+    // graph g;
+    // g.insert(0,1,3,0);
+    // g.insert(0,2,2,0);
+    // g.insert(0,3,11,0);
+    // g.insert(2,5,15,0);
+    // // g.insert(2,1,1,0);
+    // g.insert(1,4,18,0);
+    // g.insert(4,8,15,0);
+    // g.insert(1,6,17,0);
+    // g.insert(3,7,13,0);
+    // g.insert(9,10,13,0);
+    // g.insert(10,11,13,0);
+    // if(g.isCycle(13))
+    //     cout<<"cycle present"<<endl;
+    // else    
+    //     cout<<"cycle not present"<<endl;
+    for(int i=0;i<5;i++)
+    {
+      if(i==3)
+        continue;
+      cout<<i<<endl;
+    }
 }
