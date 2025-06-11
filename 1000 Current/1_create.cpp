@@ -1,34 +1,31 @@
 #include<bits/stdc++.h>
 using namespace std;
-class Graph
+class graph
 {
-    public:
     unordered_map<int,vector<pair<int,int>>>mp;
-    void insert(int i,int j,bool direction ,int distance)
+    public:
+    void insert(int i,int j,bool d,int w)
     {
-        if(direction)
-        {
-            mp[i].push_back({j,distance});
-            return;
-        }
-        mp[i].push_back({j,distance});
-        mp[j].push_back({i,distance});
+        mp[i].push_back({j,w});
+        if(d)
+            mp[j].push_back({i,w});
     }
-    void print(int n)
+    void fullprint(int n)
     {
         for(int i=0;i<n;i++)
         {
-            cout<<" "<<i<<" ";
-            for(auto & k:mp[i])
+            vector<pair<int,int>>v=mp[i];
+            cout<<i<<" { ";
+            for(int j=0;j<v.size();j++)
             {
-                    int end=k.first;
-                    int weight=k.second;
-                    cout<<" { "<<end<<" "<<weight<<" } ";
+                int val=v[j].first;
+                int dist=v[j].second;
+                cout<<" ( "<<val <<"  , "<<dist <<"  ) ";
             }
-            cout<<endl;
+            cout<<" } "<<endl;
         }
     }
-    void bfstraversal(int i,unordered_map<int,int>&visited)
+    void bfs(int i,unordered_map<int,bool>&visited)
     {
         queue<int>q;
         q.push(i);
@@ -37,108 +34,103 @@ class Graph
         {
             int front=q.front();
             q.pop();
-            cout<<front<<endl;
-            for(auto & k:mp[front])
+            cout<<front<<"   ";
+            vector<pair<int,int>>v=mp[front];
+            for(int j=0;j<v.size();j++)
             {
-                if(!visited[k.first])
+                if(!visited[v[j].first])
                 {
-                    q.push(k.first);
-                    visited[k.first]=1;
+                    q.push(v[j].first);
+                    visited[v[j].first]=1;
                 }
             }
         }
+        cout<<endl;
     }
-    void dfstraversal(int i,unordered_map<int,int>&visited)
+    void bfshelper(int n)
+    {
+        unordered_map<int,bool>visited;
+        for(int i=0;i<n;i++)
+        {
+            if(!visited[i])
+                bfs(i,visited);
+        }
+    }
+    void dfs(int i,unordered_map<int,bool>&visited)
     {
         if(!visited[i])
         {
-            cout<<i<<endl;
+            cout<<i<<"   ";
             visited[i]=1;
-            for(auto &k:mp[i])
+            vector<pair<int,int>>v=mp[i];
+            for(int j=0;j<v.size();j++)
             {
-                dfstraversal(k.first,visited);
+                dfs(v[j].first,visited);
             }
         }
+        
     }
-    void disconnected(int n,int choice)
+    int dfscycle(int i,unordered_map<int,bool>&visited,unordered_map<int,bool>&track)
     {
-        unordered_map<int,int>visited;
-        if(choice)
+        if(!visited[i])
         {
-            for(int i=0;i<n;i++)
+            track[i]=1;
+            cout<<i<<"   ";
+            visited[i]=1;
+            vector<pair<int,int>>v=mp[i];
+            for(int j=0;j<v.size();j++)
             {
-                if(!visited[i])
-                {
-                    bfstraversal(i,visited);
-                }
+                return dfscycle(v[j].first,visited,track);
             }
+            track[i]=0;
         }
-        else
+        else 
         {
-            for(int i=0;i<n;i++)
-            {
-                if(!visited[i])
-                {
-                    dfstraversal(i,visited);
-                }
-            }
+            if(track[i]==1)
+                return 1;
         }
+        return 0;
     }
-    void djikstra(int n)
+    int iscycle(int n)
     {
-        set<pair<int,int>>s;
-        s.insert({0,0});
-        vector<int>v(n,INT_MAX);
-        v[0]=0;
-        while(!s.empty())
-        {
-            auto it=s.begin();
-            int node=it->second;
-            int distance=it->first;
-            s.erase(s.begin());
-            vector<pair<int,int>>adj=mp[node];
-            for(int i=0;i<adj.size();i++)
-            {
-                int value=adj[i].first;
-                int wt=adj[i].second;
-                if(distance+wt<v[value])
-                {
-                    auto record=s.find({v[value],value});
-                    if(record!=s.end())
-                        s.erase(record);
-                    s.insert({v[value]=distance+wt,value});
-                }
-            }
-        }
+        unordered_map<int,bool>visited,track;
         for(int i=0;i<n;i++)
         {
-            cout<<v[i]<<"   ";
+            if(!visited[i])
+            {
+                if(dfscycle(i,visited,track))
+                    return true;
+            }
+        }
+        return false;
+    }
+    void dfshelper(int n)
+    {
+        unordered_map<int,bool>visited;
+        for(int i=0;i<n;i++)
+        {
+            if(!visited[i])
+                dfs(i,visited);
         }
     }
 };
 int main()
 {
-    Graph g;
-    // g.insert(0,1,0,13);
-    // g.insert(0,2,0,12);
-    // g.insert(0,3,0,11);
-    // g.insert(1,4,0,18);
-    // g.insert(2,5,0,15);
-    // g.insert(4,8,0,16);
-    // g.insert(1,6,0,17);
-    // g.insert(3,7,0,19);
-    // g.insert(9,10,0,24);
-    // g.insert(10,11,0,21);
-    // g.insert(8,6,0,12);
+    graph g;
+    g.insert(0,1,0,3);
+    g.insert(0,2,0,5);
+    g.insert(1,3,0,3);
+    g.insert(1,4,0,7);
+    g.insert(1,5,0,9);
+    g.insert(2,3,0,1);
+    g.insert(2,6,0,3);
+    g.insert(3,7,0,5);
+    g.insert(3,8,0,3);
+    g.insert(6,9,0,5);
     
-    g.insert(0,1,1,11);
-    g.insert(0,2,1,12);
-    g.insert(1,3,1,13);
-    g.insert(1,4,1,14);
-    g.insert(2,5,1,15);
-    g.insert(2,6,1,16);
-    g.insert(5,1,1,155);
-    g.print(7);
-    g.disconnected(7,0);
-    g.djikstra(7);
+    g.fullprint(10);
+
+    g.bfshelper(10);
+
+    g.dfshelper(10);
 }

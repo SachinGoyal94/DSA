@@ -94,12 +94,12 @@ class graph
 int main()
 {
     graph g;
-    g.insert(0,1,2,0);
-    g.insert(0,3,6,0);
-    g.insert(1,4,5,0);
-    g.insert(3,1,8,0);
-    g.insert(4,2,7,0);
-    g.insert(1,2,3,0);
+    g.insert(0,1,6,0);
+    g.insert(0,2,2,0);
+    g.insert(2,3,3,0);
+    g.insert(1,2,8,0);
+    g.insert(2,4,4,0);
+    g.insert(3,4,9,0);
 
     g.prism(5);
 }
