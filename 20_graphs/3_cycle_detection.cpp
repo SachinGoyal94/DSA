@@ -1,5 +1,5 @@
 //cycle detection directed graphs
-//cycle means atleast 1 node get repeats 
+//cycle means atleast 1 node get repeats  
 /*
     A-->B               A->B->C->D->A  cycle
     -    |
