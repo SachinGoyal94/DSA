@@ -61,7 +61,7 @@ I encourage you to contribute to this repository! Feel free to:
 
 ## Let's Connect! 🌐
 
-*   [LinkedIn]([Your LinkedIn Profile](https://www.linkedin.com/in/sachin-goyal-518770311/))
+- 💼 [LinkedIn](https://www.linkedin.com/in/sachin-goyal-518770311/) 
 
 
 ## Show Your Support ❤️
